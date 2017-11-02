@@ -18,57 +18,44 @@ public class Lab_8_BattingStatistics {
 	 * @param args
 	 */
 	public static void main(String[] args) {
+		System.out.println("Welcome to Batting Average Calculator!!");
+		
 		Scanner sc = new Scanner(System.in);
 		boolean repeat = true;
-		int playerCounter = 0;
-		int playerCount = Validator.getInt(sc, "How many players? ", 1, 5);
+		int playerCounter = 0; // loop through each player
+		int playerCount = Validator.getInt(sc, "\nHow many players? ", 1, 5); // prompt user for three
 
 		double[][] playerStorage = new double[playerCount][2];
 
-		/*
-		 * double battingAverage = 0.0; double sluggingPercentage = 0.0;
-		 */
 		ArrayList<Integer> battingData = new ArrayList<Integer>();// use array to store the at-bat results for each
 																	// player
 
 		while (repeat) {
-			for (int player = 0; player < playerCount; player++) {
-				int numberOfAtBats = Validator.getInt(sc, "\nHow many at-bats for player " + (player + 1) + ": ");
+			for (int player = 0; player < playerCount; player++) { // increment through each player
+				int numberOfAtBats = Validator.getInt(sc, "\nHow many at-bats for player " + (player + 1) + ": ", 0, 5);
 
 				System.out.println("0 = out, 1 = single, 2 = double, 3 = triple, 4 = home run");
 				for (int i = 0; i < numberOfAtBats; i++) {
-					battingData.add(Validator.getInt(sc, "Result for at-bat " + i + ": ", 0, 4));
+					battingData.add(Validator.getInt(sc, "Result for at-bat " + (i+1) + ": ", 0, 4));
 					storePlayerData(player, calculateBattingAverage(battingData),
 							calculateSluggingPercentage(battingData), playerStorage);
 				}
 
-			/*	storePlayerData(playerCounter, calculateBattingAverage(battingData),
-						calculateSluggingPercentage(battingData), playerStorage);
-			*/	
-			//	battingData.clear();
-			/*	System.out.print("\nBatting average:  ");
-				System.out.printf("%.3f", calculateBattingAverage(battingData));
-				System.out.print("\nSlugging Percentage: ");
-				System.out.printf("%.3f", calculateSluggingPercentage(battingData));
-				System.out.println("\n");*/
-
-				}
-				
-				
-				
-				for (int i = 0; i < playerStorage.length; i++) {
-					System.out.println("\n\nPlayer " + (i + 1));
-					System.out.print("Batting average: ");
-					System.out.printf("%.3f", playerStorage[i][0]);
-					System.out.print("\nSlugging Percentage: ");
-					System.out.printf("%.3f", playerStorage[i][1]);
 			}
 
-			repeat = repeatYesNo(Validator.getString(sc, "\n\nAnother batter, yo? "));
+			printPlayerStats(playerStorage);
+		
 
+		repeat = repeatYesNo(Validator.getString(sc, "\n\nAnother batter, yo? "));
+		
 	
-		} System.out.println("Okay thanks! Good bye!");
-		sc.close();
+		playerCount = Validator.getInt(sc, "\nHow many players? ", 1, 5);
+		playerStorage = new double[playerCount][2];
+		
+		}
+		
+	System.out.println("Okay thanks! Good bye!");sc.close();
+
 	}
 
 	/**
@@ -126,6 +113,16 @@ public class Lab_8_BattingStatistics {
 		// System.out.println("battingAverage: " + battingAverage);
 
 		return battingAverage;
+	}
+
+	public static void printPlayerStats(double[][] playerStorage) {
+		for (int i = 0; i < playerStorage.length; i++) {
+			System.out.println("\n\nPlayer " + (i + 1));
+			System.out.print("Batting average: ");
+			System.out.printf("%.3f", playerStorage[i][0]);
+			System.out.print("\nSlugging Percentage: ");
+			System.out.printf("%.3f", playerStorage[i][1]);
+		}
 	}
 
 }
